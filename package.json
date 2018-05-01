@@ -2,7 +2,7 @@
   "name": "schematic-traverse-node",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test-lr": "nodemon --ignore dist --exec 'tsc-watch --onSuccess \"npm run test\"'",
     "test": "mocha test/**/*.js"

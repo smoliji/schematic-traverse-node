@@ -16,45 +16,7 @@ const wraperArrayItems = (wrapTag) => (a) => a.map(wrapper(wrapTag));
 const primitive = traverse(schema(PRIMITIVE), identity);
 const promised = fn => x => Promise.resolve(fn(x));
 
-
-const string = traverse(
-    schema(PRIMITIVE),
-    x => String(x || '')
-)
-const number = traverse(
-    schema(PRIMITIVE),
-    x => Number(x || 0)
-)
-const anyOf = (choices) =>
-    input => choices.filter(
-        choice => input.find(x => (x === choice))
-    )
-
-const ensure = traverse(
-    schema(
-        OBJECT,
-        {
-            username: string,
-            roles: traverse(
-                schema(ARRAY, string),
-                anyOf(['USER', 'ADMIN'])
-            ),
-            address: traverse(
-                schema(
-                    OBJECT,
-                    {
-                        zip: number,
-                        city: string,
-                    }
-                )
-            )
-        }
-    )
-)
-
-console.log(ensure({ username: 123, roles: ['USER', 'X']}))
-
-describe.only('traverse', () => {
+describe('traverse', () => {
     describe('Primitive schema', () => {
         const wrap = wrapper('X');
         it('Simple schema', () => {
