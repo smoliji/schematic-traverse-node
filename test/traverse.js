@@ -52,6 +52,18 @@ describe('traverse', () => {
             );
             expect(result).to.eql(wrapKeys({}));
         });
+        it('Null input', () => {
+            const result = traverse(
+                schema(
+                    OBJECT,
+                    {}
+                ),
+                wrapKeys
+            )(
+                null
+            );
+            expect(result).to.eql(wrapKeys({}));
+        });
         it('Flat schema', () => {
             const result = traverse(
                 schema(
@@ -82,6 +94,41 @@ describe('traverse', () => {
                 expect(result).to.eql(wrapKeys({ foo: 'bar' }));
             });
         });
+        it('Nested mixed schema (w null in)', () => {
+            const result = traverse(
+                schema(
+                    OBJECT,
+                    {
+                        subobject: traverse(
+                            schema(
+                                OBJECT,
+                                {
+                                    foo: primitive
+                                }
+                            ),
+                            wrapKeys
+                        )
+                    }
+                ),
+                wrapKeys
+            )(
+                {
+                    subobject: null
+                }
+            );
+
+            expect(result).to.eql(
+                wrapKeys(
+                    {
+                        subobject: wrapKeys(
+                            {
+                                foo: undefined
+                            }
+                        )
+                    }
+                )
+            )
+        })
         it('Nested mixed schema', () => {
             const result = traverse(
                 schema(

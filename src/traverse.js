@@ -14,7 +14,7 @@ const traverseObject = (schema, iteratee = identity) =>
     (subject = {}) =>
         whenDone(
             iteratee,
-            mapValues(schema.data, (childTraverse, key) => childTraverse(subject[key]))
+            mapValues(schema.data, (childTraverse, key) => childTraverse((subject || {})[key] ))
         );
 
 const traverseArray = (schema, iteratee = identity) =>
@@ -43,7 +43,7 @@ export const shape = (structure, iteratee) =>
 
 export const array = (structure, iteratee) =>
     traverse(
-        schema(ARRAY, itemStructure),
+        schema(ARRAY, structure),
         iteratee
     )
 

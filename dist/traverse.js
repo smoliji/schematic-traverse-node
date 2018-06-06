@@ -12,7 +12,7 @@ var traverseObject = function (schema, iteratee) {
     if (iteratee === void 0) { iteratee = identity; }
     return function (subject) {
         if (subject === void 0) { subject = {}; }
-        return whenDone_1.default(iteratee, mapValues(schema.data, function (childTraverse, key) { return childTraverse(subject[key]); }));
+        return whenDone_1.default(iteratee, mapValues(schema.data, function (childTraverse, key) { return childTraverse((subject || {})[key]); }));
     };
 };
 var traverseArray = function (schema, iteratee) {
@@ -37,6 +37,6 @@ exports.shape = function (structure, iteratee) {
     return traverse(schema_1.default(schema_1.OBJECT, structure), iteratee);
 };
 exports.array = function (structure, iteratee) {
-    return traverse(schema_1.default(schema_1.ARRAY, itemStructure), iteratee);
+    return traverse(schema_1.default(schema_1.ARRAY, structure), iteratee);
 };
 exports.default = traverse;
